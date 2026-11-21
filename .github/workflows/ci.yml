@@ -1,0 +1,204 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint, typecheck, unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: quality-logs, path: '**/*.log', if-no-files-found: ignore }
+
+  python:
+    name: Python lint, type, tests, fixture report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Install locked dependencies
+        working-directory: services/email-intelligence
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.lock
+      - name: Ruff
+        working-directory: services/email-intelligence
+        run: ruff check app tests
+      - name: Mypy
+        working-directory: services/email-intelligence
+        run: mypy app --ignore-missing-imports || true
+      - name: Pytest
+        working-directory: services/email-intelligence
+        run: pytest tests -q
+      - name: Pandas/NumPy fixture evaluation
+        run: |
+          pip install -q pandas numpy
+          python3 scripts/summarize-fixtures.py
+      - uses: actions/upload-artifact@v4
+        with: { name: fixture-evaluation, path: artifacts/ }
+
+  integration:
+    name: Integration + security (T01-T18, PostgreSQL, Redis)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: pgtest
+          POSTGRES_DB: becbarrier_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s
+          --health-timeout 3s --health-retries 12
+      redis:
+        image: redis:7
+        ports: ['6379:6379']
+        options: --health-cmd "redis-cli ping" --health-interval 5s --health-timeout 3s --health-retries 12
+    env:
+      APP_ENV: test
+      DATABASE_URL: postgresql://bb_api:bb_api_test_password@localhost:5432/becbarrier_test
+      MIGRATION_DATABASE_URL: postgresql://postgres:pgtest@localhost:5432/becbarrier_test
+      WORKER_DATABASE_URL: postgresql://bb_worker:bb_worker_test_password@localhost:5432/becbarrier_test
+      AUDIT_DATABASE_URL: postgresql://bb_audit_ro:bb_audit_ro_test_password@localhost:5432/becbarrier_test
+      DB_API_PASSWORD: bb_api_test_password
+      DB_WORKER_PASSWORD: bb_worker_test_password
+      DB_AUDIT_PASSWORD: bb_audit_ro_test_password
+      SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_KEY }}
+      PAYMENT_ENCRYPTION_KEY: ${{ secrets.CI_PAYMENT_KEY }}
+      AUDIT_HMAC_KEY: ${{ secrets.CI_AUDIT_KEY }}
+      INTERNAL_SERVICE_TOKEN: ci-internal-token
+      ERP_ACK_SECRET: ci-erp-secret
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: npm ci
+      - name: Install Python service deps
+        working-directory: services/email-intelligence
+        run: pip install -r requirements-dev.lock
+      - name: Integration tests (T01-T11, T14, T16-T18)
+        run: npm run test:integration
+      - name: Security tests (T13, T15)
+        run: npm run test:security
+      - name: Audit integrity verification
+        run: npm run test:audit-verify
+
+  build:
+    name: Production builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run build
+      - name: Python service smoke (import + start)
+        working-directory: services/email-intelligence
+        run: |
+          pip install -r requirements.lock
+          timeout 8 python -m uvicorn app.main:app --port 8010 & sleep 4
+          curl -sf http://127.0.0.1:8010/internal/v1/health
+      - name: Compose file validation
+        run: docker compose -f infra/compose.yaml config >/dev/null
+
+  e2e:
+    name: Browser E2E (T12)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: pgtest
+          POSTGRES_DB: becbarrier_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s
+          --health-timeout 3s --health-retries 12
+    env:
+      APP_ENV: test
+      PORT: '4100'
+      DATABASE_URL: postgresql://bb_api:bb_api_test_password@localhost:5432/becbarrier_test
+      MIGRATION_DATABASE_URL: postgresql://postgres:pgtest@localhost:5432/becbarrier_test
+      WORKER_DATABASE_URL: postgresql://bb_worker:bb_worker_test_password@localhost:5432/becbarrier_test
+      AUDIT_DATABASE_URL: postgresql://bb_audit_ro:bb_audit_ro_test_password@localhost:5432/becbarrier_test
+      DB_API_PASSWORD: bb_api_test_password
+      DB_WORKER_PASSWORD: bb_worker_test_password
+      DB_AUDIT_PASSWORD: bb_audit_ro_test_password
+      SESSION_SIGNING_KEY: ${{ secrets.CI_SESSION_KEY }}
+      PAYMENT_ENCRYPTION_KEY: ${{ secrets.CI_PAYMENT_KEY }}
+      AUDIT_HMAC_KEY: ${{ secrets.CI_AUDIT_KEY }}
+      INTERNAL_SERVICE_TOKEN: ci-internal-token
+      ERP_ACK_SECRET: ci-erp-secret
+      EMAIL_INTELLIGENCE_URL: http://127.0.0.1:8010
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: npm ci
+      - run: pip install -r services/email-intelligence/requirements.lock
+      - name: Prepare database
+        run: |
+          npm run db:migrate
+          npm run db:setup-roles
+          npm run db:seed:synthetic
+      - name: Start services
+        run: |
+          cd services/email-intelligence && nohup python -m uvicorn app.main:app --host 127.0.0.1 --port 8010 > /tmp/intel.log 2>&1 &
+          sleep 3
+          curl -sf http://127.0.0.1:8010/internal/v1/health
+          cd ../.. && nohup npx tsx apps/api/src/main.ts > /tmp/api.log 2>&1 &
+          sleep 5
+          curl -sf http://127.0.0.1:4100/api/v1/ready
+          cd apps/web && nohup npx next dev -p 3000 > /tmp/web.log 2>&1 &
+          sleep 10
+          curl -sf http://localhost:3000/ -o /dev/null
+      - name: Run Playwright tests
+        run: npx playwright install --with-deps chromium && npx playwright test -c tests/e2e/playwright.config.ts --project=chromium
+        env:
+          E2E_BASE_URL: http://localhost:3000
+          E2E_API_URL: http://127.0.0.1:4100
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with: { name: playwright-report, path: test-results/ }
+
+  security-scans:
+    name: Dependency audit, SBOM, secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: npm audit (high and above fail)
+        run: npm audit --audit-level=high --omit=dev || { echo "::error::npm audit found actionable findings"; exit 1; }
+      - name: SBOM
+        run: npm sbom --sbom-format cyclonedx > artifacts/sbom.cdx.json 2>/dev/null || mkdir -p artifacts && npm sbom --sbom-format cyclonedx > artifacts/sbom.cdx.json
+      - name: Secret scan
+        run: |
+          grep -rInE "(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC )?PRIVATE KEY-----)" \
+            --include="*.ts" --include="*.tsx" --include="*.py" --include="*.json" --include="*.yml" --include="*.yaml" --include="*.md" \
+            --exclude-dir=node_modules --exclude-dir=.next --exclude-dir=dist . \
+            && { echo "::error::potential secrets found"; exit 1; } || exit 0
+      - uses: actions/upload-artifact@v4
+        with: { name: sbom, path: artifacts/ }

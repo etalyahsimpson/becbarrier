@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# build outputs
+dist/
+.next/
+out/
+*.tsbuildinfo
+
+# environment / secrets — never commit real values
+.env
+.env.*
+!.env.example
+
+# test artifacts
+artifacts/
+test-results/
+playwright-report/
+coverage/
+
+# local runtime state
+*.log
+.DS_Store

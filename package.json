@@ -1,0 +1,56 @@
+{
+  "name": "becbarrier",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise business email compromise defense and supplier-payment verification with explainable email indicators, independent callbacks, dual approval and auditable financial controls.",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:packages": "tsc -b packages/contracts packages/domain packages/security",
+    "build": "npm run build:packages && npm run build -w apps/api -w apps/worker -w apps/web",
+    "lint": "eslint . && ruff check services/email-intelligence",
+    "lint:fix": "eslint . --fix && ruff check --fix services/email-intelligence",
+    "typecheck": "npm run build:packages && tsc --noEmit -p apps/api && tsc --noEmit -p apps/worker && tsc --noEmit -p apps/web && tsc --noEmit -p tsconfig.db.json && tsc --noEmit -p tests/tsconfig.json",
+    "test:unit": "jest --selectProjects unit",
+    "test:integration": "jest --selectProjects integration --runInBand --forceExit",
+    "test:security": "jest --selectProjects security --runInBand --forceExit",
+    "test:e2e": "playwright test -c tests/e2e/playwright.config.ts",
+    "test:python": "pytest services/email-intelligence/tests -q",
+    "test:audit-verify": "tsx db/verify-audit.ts",
+    "db:migrate": "tsx db/migrate.ts up",
+    "db:migrate:down": "tsx db/migrate.ts down",
+    "db:setup-roles": "tsx db/setup-roles.ts",
+    "db:seed:synthetic": "tsx db/seeds/seed.ts",
+    "dev:api": "npm run build:packages && tsx watch apps/api/src/main.ts",
+    "dev:web": "npm run dev -w apps/web",
+    "dev:worker": "npm run build:packages && tsx watch apps/worker/src/main.ts",
+    "verify": "bash scripts/verify.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@playwright/test": "1.65.1",
+    "@types/express": "^5.0.5",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.19.10",
+    "@types/pg": "^8.15.9",
+    "@types/supertest": "^6.0.3",
+    "@types/ws": "^8.18.1",
+    "eslint": "^9.39.2",
+    "jest": "^29.7.0",
+    "newman": "^6.2.3",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}

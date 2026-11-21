@@ -1,0 +1,58 @@
+{
+  "id": "BC-N06",
+  "category": "negative",
+  "description": "Callback contact approved only AFTER the request is rejected (invariant 3)",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Contact freshness test."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-admin",
+      "action": "approve-contact",
+      "input": {
+        "channel": "PHONE",
+        "value": "+15550188",
+        "label": "Newly approved line"
+      },
+      "contactKey": "fresh-contact",
+      "expect": {
+        "status": 201
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:fresh-contact",
+        "result": "CONFIRMED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 422,
+        "code": "VERIFICATION_REQUIRED"
+      }
+    }
+  ],
+  "finalState": "ON_HOLD",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

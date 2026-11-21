@@ -1,0 +1,5 @@
+From: billing@vulcan-steel.example
+Subject: invoice
+Content-Type: text/html
+
+<html><body onload="steal()"><img src="https://tracker.example/p.png"><a href="javascript:bad()">click</a><p>Please update our bank details</p></body></html>

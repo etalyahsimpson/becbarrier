@@ -1,0 +1,5 @@
+From: billing@vulcan-steel.example
+Subject: x
+Authentication-Results: nonsense; spf=banana; dkim=?; dmarc=ÿþ broken
+
+Regular text about an invoice.

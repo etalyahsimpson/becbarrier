@@ -1,0 +1,2240 @@
+{
+  "rulesetVersion": "bec-rules-v1",
+  "provenanceForExpectations": "RAW_UPLOAD",
+  "approvedDomainsForExpectations": [
+    "vulcan-steel.example",
+    "meridian-pack.example",
+    "northlight.example",
+    "apexchem.example"
+  ],
+  "approvedAliasesForExpectations": [
+    "northlight-logistics.example"
+  ],
+  "counts": {
+    "normal": 8,
+    "suspicious": 12,
+    "ambiguous": 6,
+    "malformed": 6,
+    "total": 32
+  },
+  "fixtures": [
+    {
+      "id": "N01",
+      "category": "normal",
+      "description": "Internal weekly update, no supplier context",
+      "expected": {
+        "digest": "7ded72fbab9079fd9517d9fc1e1df4026a2b9c9b03833b637aab1999f553dbcc",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Team Update",
+            "email": "team@atlas-mfg.example",
+            "mailbox": "team",
+            "domain": "atlas-mfg.example",
+            "domainNormalized": "atlas-mfg.example"
+          },
+          "replyTo": null,
+          "subject": "Weekly operations update",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "N02",
+      "category": "normal",
+      "description": "Normal supplier invoice, no bank-change language",
+      "expected": {
+        "digest": "4c52b49fdb82dbbf24f9cda6772efc521f4c2c03324bd9912b35d4a3bab3c967",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel Billing",
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": null,
+          "subject": "Invoice INV-2026-118 for November",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "N03",
+      "category": "normal",
+      "description": "Supplier alias domain, routine shipment note",
+      "expected": {
+        "digest": "af76de83999e3634fd29bf2764f44b5596ec071f1c7dbeac67cbfe118c33cd0e",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Northlight Ops",
+            "email": "ops@northlight-logistics.example",
+            "mailbox": "ops",
+            "domain": "northlight-logistics.example",
+            "domainNormalized": "northlight-logistics.example"
+          },
+          "replyTo": null,
+          "subject": "Shipment schedule for next week",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "N04",
+      "category": "normal",
+      "description": "Legitimate reply-to support desk (BEC-01 legitimate exception)",
+      "expected": {
+        "digest": "003fba8506f112ba4e1d00f59f72353ee4cf742c4c6c5999355b4f789c6825f1",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 25,
+        "priority": "MEDIUM",
+        "matchedRules": [
+          "BEC-01"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Meridian Packaging",
+            "email": "orders@meridian-pack.example",
+            "mailbox": "orders",
+            "domain": "meridian-pack.example",
+            "domainNormalized": "meridian-pack.example"
+          },
+          "replyTo": {
+            "displayName": null,
+            "email": "support@meridian-pack.example",
+            "mailbox": "support",
+            "domain": "meridian-pack.example",
+            "domainNormalized": "meridian-pack.example"
+          },
+          "subject": "Order confirmation 4471",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "N05",
+      "category": "normal",
+      "description": "Benign urgency with no payment context",
+      "expected": {
+        "digest": "c050bcb568925cb0ea8dfd89808f4876103b6b0e5f8af6f84686c3f2b83ac98d",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "HR Services",
+            "email": "hr@atlas-mfg.example",
+            "mailbox": "hr",
+            "domain": "atlas-mfg.example",
+            "domainNormalized": "atlas-mfg.example"
+          },
+          "replyTo": null,
+          "subject": "Expense reports due today",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "N06",
+      "category": "normal",
+      "description": "Ordinary newsletter",
+      "expected": {
+        "digest": "f2317ee9a05695c89ffb6aa956c3c2939d53a1cc484eaa6ff3c59fa0f59cb242",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Industry Weekly",
+            "email": "news@industry-weekly.example",
+            "mailbox": "news",
+            "domain": "industry-weekly.example",
+            "domainNormalized": "industry-weekly.example"
+          },
+          "replyTo": null,
+          "subject": "Industry Weekly \u2014 November edition",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "N07",
+      "category": "normal",
+      "description": "Well-formed message from an unapproved but unrelated domain",
+      "expected": {
+        "digest": "a63e6119e2d62b3000ff8892c0a181ebd10bb0aa84d9585404dd2facbd9b7f4c",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Conference Team",
+            "email": "hello@manufacturing-summit.example",
+            "mailbox": "hello",
+            "domain": "manufacturing-summit.example",
+            "domainNormalized": "manufacturing-summit.example"
+          },
+          "replyTo": null,
+          "subject": "Speaker confirmation",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "N08",
+      "category": "normal",
+      "description": "Supplier statement notification, no indicators",
+      "expected": {
+        "digest": "1b5d807b4130550c8426300b5dc73ee4d3759363257ab114e58a75756bd90f40",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Meridian Packaging",
+            "email": "statements@meridian-pack.example",
+            "mailbox": "statements",
+            "domain": "meridian-pack.example",
+            "domainNormalized": "meridian-pack.example"
+          },
+          "replyTo": null,
+          "subject": "Your monthly statement is ready",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S01",
+      "category": "suspicious",
+      "description": "Executive impersonation directing urgent payment action",
+      "expected": {
+        "digest": "95ab169828df40769f58881eda4eed5ef6b0b7ad02adccbcb40737f8d63b6b6d",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 55,
+        "priority": "HIGH",
+        "matchedRules": [
+          "BEC-03",
+          "BEC-04"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Avery Chen",
+            "email": "avery.chen@atlas-exec.example",
+            "mailbox": "avery.chen",
+            "domain": "atlas-exec.example",
+            "domainNormalized": "atlas-exec.example"
+          },
+          "replyTo": null,
+          "subject": "Urgent: payment needed today",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S02",
+      "category": "suspicious",
+      "description": "Supplier lookalike domain with bank-change language",
+      "expected": {
+        "digest": "6f7cbdf0ae873d108892d3d9990e3c4dc87bc06eee58b84cbae18263c1cdd177",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 100,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-01",
+          "BEC-02",
+          "BEC-03",
+          "BEC-06"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel Billing",
+            "email": "billing@vu1can-steel.example",
+            "mailbox": "billing",
+            "domain": "vu1can-steel.example",
+            "domainNormalized": "vu1can-steel.example"
+          },
+          "replyTo": {
+            "displayName": null,
+            "email": "vulcan.payments@external-mail.example",
+            "mailbox": "vulcan.payments",
+            "domain": "external-mail.example",
+            "domainNormalized": "external-mail.example"
+          },
+          "subject": "Updated remittance information",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S03",
+      "category": "suspicious",
+      "description": "Approved domain with altered Reply-To redirection",
+      "expected": {
+        "digest": "4cdeacf27f23d3849674b81e1cae3b02ec0d7823faf58dd263b5de27511e1db8",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 70,
+        "priority": "HIGH",
+        "matchedRules": [
+          "BEC-01",
+          "BEC-03"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel",
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": {
+            "displayName": null,
+            "email": "vulcan.payments@external-mail.example",
+            "mailbox": "vulcan.payments",
+            "domain": "external-mail.example",
+            "domainNormalized": "external-mail.example"
+          },
+          "subject": "New payment instructions",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S04",
+      "category": "suspicious",
+      "description": "Authenticated-looking supplier message requesting bank change (T04)",
+      "expected": {
+        "digest": "0d371085f40e6656cf4ceb68f1493856e5fb81357db5b891ece18e101ab25572",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 55,
+        "priority": "HIGH",
+        "matchedRules": [
+          "BEC-03",
+          "BEC-04",
+          "BEC-07"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel",
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": null,
+          "subject": "Banking update \u2014 action required",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "PRESENT_UNVERIFIED",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": true,
+            "claimedResults": "mx.example; spf=pass; dkim=pass; dmarc=pass",
+            "claimTrust": "UNTRUSTED_CLAIM"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S05",
+      "category": "suspicious",
+      "description": "Lookalike domain with urgency plus bank-change combination",
+      "expected": {
+        "digest": "8478c19934fd00e0b427fe0a5a1e6c46a04879df6281abebe13eecdb1271d964",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 100,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-02",
+          "BEC-03",
+          "BEC-04"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Meridian",
+            "email": "accounts@meridian-pak.example",
+            "mailbox": "accounts",
+            "domain": "meridian-pak.example",
+            "domainNormalized": "meridian-pak.example"
+          },
+          "replyTo": null,
+          "subject": "URGENT: account update needed today",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S06",
+      "category": "suspicious",
+      "description": "Approved-alias domain carrying claimed SPF/DKIM/DMARC PASS (T02)",
+      "expected": {
+        "digest": "3c191d237676309a6e6704f4f750cf1411c5b711c1c2ca17181f9223b83ba515",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 45,
+        "priority": "MEDIUM",
+        "matchedRules": [
+          "BEC-03",
+          "BEC-07"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Northlight Finance",
+            "email": "finance@northlight-logistics.example",
+            "mailbox": "finance",
+            "domain": "northlight-logistics.example",
+            "domainNormalized": "northlight-logistics.example"
+          },
+          "replyTo": null,
+          "subject": "Payment account change",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": true,
+            "claimedResults": "mx.example; spf=pass; dkim=pass; dmarc=pass",
+            "claimTrust": "UNTRUSTED_CLAIM"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S07",
+      "category": "suspicious",
+      "description": "Full combination: lookalike, reply-to mismatch, bank language, urgency, claimed auth",
+      "expected": {
+        "digest": "becd818785a8ec5f53ae5e31d4db51a4f8738fdca2043c12afc81bd0273db742",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 100,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-01",
+          "BEC-02",
+          "BEC-03",
+          "BEC-04",
+          "BEC-06",
+          "BEC-07"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel Accounts",
+            "email": "billing@vu1can-stee1.example",
+            "mailbox": "billing",
+            "domain": "vu1can-stee1.example",
+            "domainNormalized": "vu1can-stee1.example"
+          },
+          "replyTo": {
+            "displayName": null,
+            "email": "vulcan.payments@external-mail.example",
+            "mailbox": "vulcan.payments",
+            "domain": "external-mail.example",
+            "domainNormalized": "external-mail.example"
+          },
+          "subject": "URGENT final notice \u2014 banking change",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": true,
+            "claimedResults": "mx.example; spf=pass; dkim=pass; dmarc=pass",
+            "claimTrust": "UNTRUSTED_CLAIM"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S08",
+      "category": "suspicious",
+      "description": "Plural-suffix lookalike domain with payment language",
+      "expected": {
+        "digest": "54bf0b5eeca04f8ec9ace0bcfa46c2017b57267999566e26170ace856c76a43b",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 100,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-02",
+          "BEC-03",
+          "BEC-06"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steels",
+            "email": "billing@vulcan-steels.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steels.example",
+            "domainNormalized": "vulcan-steels.example"
+          },
+          "replyTo": null,
+          "subject": "Invoice payment update",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S09",
+      "category": "suspicious",
+      "description": "Character-doubled lookalike of a second supplier",
+      "expected": {
+        "digest": "e11477bca9a3032bf0974f61035a39237030154fdf063983aa58d15f18c0f024",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 100,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-02",
+          "BEC-03",
+          "BEC-06"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Northlight",
+            "email": "billing@northlightt.example",
+            "mailbox": "billing",
+            "domain": "northlightt.example",
+            "domainNormalized": "northlightt.example"
+          },
+          "replyTo": null,
+          "subject": "Remittance change notice",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S10",
+      "category": "suspicious",
+      "description": "Sort-code and account-number specific bank-change request",
+      "expected": {
+        "digest": "d3157d79eb440b6063ecad0880e2b41f601dc13bb01d1924ee0845fb43002223",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 100,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-02",
+          "BEC-03",
+          "BEC-06"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Meridian Packaging",
+            "email": "accounts@meridian-pak.example",
+            "mailbox": "accounts",
+            "domain": "meridian-pak.example",
+            "domainNormalized": "meridian-pak.example"
+          },
+          "replyTo": null,
+          "subject": "Updated sort code and account",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S11",
+      "category": "suspicious",
+      "description": "Lookalike domain with urgency but no explicit bank-change phrase",
+      "expected": {
+        "digest": "9dac51854efe923a580a7649c697e125cbbed1b4eb40502a5eba5c3d3bfedb04",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 100,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-02",
+          "BEC-04",
+          "BEC-06"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel",
+            "email": "billing@vu1can-steel.example",
+            "mailbox": "billing",
+            "domain": "vu1can-steel.example",
+            "domainNormalized": "vu1can-steel.example"
+          },
+          "replyTo": null,
+          "subject": "URGENT invoice follow-up",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "S12",
+      "category": "suspicious",
+      "description": "Display-name supplier spoof from an unapproved domain",
+      "expected": {
+        "digest": "124ce210ba759fb62bb6e0d25e94339290ffa19d6efb7d9a3a97966e037a3a61",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 90,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-03",
+          "BEC-06"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel Accounts Receivable",
+            "email": "anyone@unrelated-domain.example",
+            "mailbox": "anyone",
+            "domain": "unrelated-domain.example",
+            "domainNormalized": "unrelated-domain.example"
+          },
+          "replyTo": null,
+          "subject": "Payment redirection",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "A01",
+      "category": "ambiguous",
+      "description": "Forwarded thread quoting third-party bank-change language",
+      "expected": {
+        "digest": "684bacad31f327c46da331873f534b2659742c02fc78736d182246d2c1331ae7",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 45,
+        "priority": "MEDIUM",
+        "matchedRules": [
+          "BEC-03"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Vulcan Steel",
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": null,
+          "subject": "Fwd: Coordinator update",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "A02",
+      "category": "ambiguous",
+      "description": "Trusted supplier writing from a similar alternate domain",
+      "expected": {
+        "digest": "09d99b43b2dcf9e9f35e3c2cb36b454b32402bad6780eb61ea34159daf14ab5d",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 90,
+        "priority": "CRITICAL",
+        "matchedRules": [
+          "BEC-02",
+          "BEC-06"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Meridian Packaging",
+            "email": "hello@meridian.example",
+            "mailbox": "hello",
+            "domain": "meridian.example",
+            "domainNormalized": "meridian.example"
+          },
+          "replyTo": null,
+          "subject": "Catalogue update",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "A03",
+      "category": "ambiguous",
+      "description": "Internationalized supplier domain (IDNA)",
+      "expected": {
+        "digest": "ae09dba794e7366eda455e1d93943af25499fb35088f9d07c632b1d9720cfb52",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "B\u00fccher Supplies",
+            "email": "billing@xn--bcher-supplies.example",
+            "mailbox": "billing",
+            "domain": "xn--bcher-supplies.example",
+            "domainNormalized": "xn--bcher-supplies.example"
+          },
+          "replyTo": null,
+          "subject": "Order status",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "A04",
+      "category": "ambiguous",
+      "description": "Unsigned legitimate correspondence from an approved domain",
+      "expected": {
+        "digest": "8be4bce3608076103653d6b65de064da37a2af3b4c9a8f53950eb2de7bdedbfe",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Northlight Logistics",
+            "email": "ops@northlight.example",
+            "mailbox": "ops",
+            "domain": "northlight.example",
+            "domainNormalized": "northlight.example"
+          },
+          "replyTo": null,
+          "subject": "Delivery note 2026-11-20",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "A05",
+      "category": "ambiguous",
+      "description": "Missing metadata: malformed From, no subject or date",
+      "expected": {
+        "digest": "058ff6650a2d594df314672737b836e1e5c747795d29897c9ae509142c2b28f0",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-02",
+          "BEC-05",
+          "BEC-06"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "UNKNOWN",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "UNKNOWN",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "",
+            "email": null,
+            "mailbox": null,
+            "domain": null,
+            "domainNormalized": null
+          },
+          "replyTo": null,
+          "subject": null,
+          "toCount": 0,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "A06",
+      "category": "ambiguous",
+      "description": "External partner urging invoice payment without bank change",
+      "expected": {
+        "digest": "883d338d3e229bd55be57a5c5b9fabcf32ba6473f3a676428fb73fc537e34bc9",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": "Consulting Partner",
+            "email": "invoices@summit-consulting.example",
+            "mailbox": "invoices",
+            "domain": "summit-consulting.example",
+            "domainNormalized": "summit-consulting.example"
+          },
+          "replyTo": null,
+          "subject": "Invoice overdue \u2014 please expedite",
+          "toCount": 1,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "M01",
+      "category": "malformed",
+      "description": "Oversize payload (exceeds the 2 MiB cap)",
+      "expected": {
+        "digest": "81b2fc05815b39485c5577a39a21a943902cff7070674f862b3ce270928bacc3",
+        "parseStatus": "REJECTED_OVERSIZE",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "PARSE"
+        ],
+        "findings": {
+          "PARSE": {
+            "outcome": "UNKNOWN",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": null
+      }
+    },
+    {
+      "id": "M02",
+      "category": "malformed",
+      "description": "Broken MIME boundary declaration",
+      "expected": {
+        "digest": "12caba6df8fe189dd6d03be5ab3236f4229959d19df70f7d9309be5aac081095",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": null,
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": null,
+          "subject": "statement",
+          "toCount": 0,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "M03",
+      "category": "malformed",
+      "description": "Deeply folded header continuation lines",
+      "expected": {
+        "digest": "d90bf2182ad51a7b7eac016725f58e1cfcde96c9f70322d6d2ccf8136702de06",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": null,
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": null,
+          "subject": "continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation continuation c",
+          "toCount": 0,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "M04",
+      "category": "malformed",
+      "description": "Bogus Authentication-Results tokens",
+      "expected": {
+        "digest": "51c4ce058dcd682bf03980263042d9d1d5f1ed5acbfe47f8be6b56f8e3b36e63",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 0,
+        "priority": null,
+        "matchedRules": [
+          "BEC-07"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": null,
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": null,
+          "subject": "x",
+          "toCount": 0,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": true,
+            "claimedResults": "nonsense; spf=banana; dkim=?; dmarc=\ufffd\ufffd broken",
+            "claimTrust": "UNTRUSTED_CLAIM"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "M05",
+      "category": "malformed",
+      "description": "Unsafe HTML: script handler, remote images, javascript link",
+      "expected": {
+        "digest": "ace8c167c801e6bd4253d06104955f0f7c29b50ebbfbf2cb75de83186ff2f43b",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 45,
+        "priority": "MEDIUM",
+        "matchedRules": [
+          "BEC-03"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": null,
+            "email": "billing@vulcan-steel.example",
+            "mailbox": "billing",
+            "domain": "vulcan-steel.example",
+            "domainNormalized": "vulcan-steel.example"
+          },
+          "replyTo": null,
+          "subject": "invoice",
+          "toCount": 0,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": true,
+          "attachmentNames": []
+        }
+      }
+    },
+    {
+      "id": "M06",
+      "category": "malformed",
+      "description": "Malformed address header",
+      "expected": {
+        "digest": "be23c94f5ad9f366fcb62b0291076ee3df91912570d7708f371c7cd39d32af81",
+        "parseStatus": "OK",
+        "provenance": "RAW_UPLOAD",
+        "score": 45,
+        "priority": "MEDIUM",
+        "matchedRules": [
+          "BEC-03"
+        ],
+        "unknownRules": [
+          "BEC-05"
+        ],
+        "findings": {
+          "BEC-01": {
+            "outcome": "NO_MATCH",
+            "severity": "MEDIUM"
+          },
+          "BEC-02": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-03": {
+            "outcome": "MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-04": {
+            "outcome": "NO_MATCH",
+            "severity": "LOW"
+          },
+          "BEC-05": {
+            "outcome": "UNKNOWN",
+            "severity": "MEDIUM"
+          },
+          "BEC-06": {
+            "outcome": "NO_MATCH",
+            "severity": "HIGH"
+          },
+          "BEC-07": {
+            "outcome": "NO_MATCH",
+            "severity": "INFO"
+          }
+        },
+        "normalizedSummary": {
+          "from": {
+            "displayName": null,
+            "email": "\"unclosed quote <broken@@example\"",
+            "mailbox": "\"unclosed quote <broken",
+            "domain": "@example\"",
+            "domainNormalized": "@example\""
+          },
+          "replyTo": null,
+          "subject": "broken",
+          "toCount": 0,
+          "authStatus": {
+            "spf": "UNKNOWN",
+            "dkim": "NOT_PRESENT",
+            "dmarc": "NOT_EVALUATED",
+            "authenticationResultsPresent": false,
+            "claimedResults": null,
+            "claimTrust": "NONE"
+          },
+          "htmlPresent": false,
+          "attachmentNames": []
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+From: Vulcan Steel <billing@vulcan-steel.example>
+To: Finance <finance@atlas-mfg.example>
+Subject: Banking update — action required
+Date: Fri, 20 Nov 2026 09:00:00 +0000
+Message-ID: <billing-20261120@atlas-mfg.example>
+DKIM-Signature: v=1; a=rsa-sha256; d=vulcan-steel.example; s=sel; b=claim
+Authentication-Results: mx.example; spf=pass; dkim=pass; dmarc=pass
+
+Our finance department has moved banks. Please update our beneficiary details urgently so this month's invoice is not delayed.

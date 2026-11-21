@@ -1,0 +1,113 @@
+{
+  "id": "BC-N09",
+  "category": "negative",
+  "description": "Material edit voids callback and approvals; release with old evidence denied (T05)",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Revision invalidation test."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:vulcan-phone",
+        "result": "CONFIRMED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 200,
+        "state": "CALLBACK_VERIFIED"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "state": "APPROVAL_1"
+      }
+    },
+    {
+      "actor": "atlas-approver2",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "state": "APPROVAL_2"
+      }
+    },
+    {
+      "actor": "atlas-initiator",
+      "action": "revise",
+      "input": {
+        "expectedRevision": 1,
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00009988776655",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd \u2014 Treasury",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Bank reissued the account."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 2
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "release",
+      "input": {
+        "revision": 2
+      },
+      "expect": {
+        "status": 422,
+        "code": "INVALID_TRANSITION"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "decide",
+      "input": {
+        "revision": 2,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 422,
+        "code": "VERIFICATION_REQUIRED"
+      }
+    }
+  ],
+  "finalState": "ON_HOLD",
+  "expectAuditEventTypes": [
+    "REVISION_CREATED"
+  ],
+  "idempotentSteps": true
+}

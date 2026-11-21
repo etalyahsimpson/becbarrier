@@ -1,0 +1,9 @@
+From: billing@vulcan-steel.example
+Subject: statement
+Content-Type: multipart/mixed; boundary="broken"
+
+--wrong-boundary
+Content-Type: text/plain
+
+please update payment details
+--also-wrong--

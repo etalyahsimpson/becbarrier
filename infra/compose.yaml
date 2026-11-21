@@ -1,0 +1,94 @@
+# Local development stack for BECBarrier. The email-intelligence service and
+# PostgreSQL are NOT exposed to the host beyond the internal network.
+name: becbarrier
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: becbarrier_dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d becbarrier_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks: [internal]
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks: [internal]
+
+  email-intelligence:
+    build:
+      context: ..
+      dockerfile: services/email-intelligence/Dockerfile
+    environment:
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN}
+      UPLOAD_MAX_BYTES: "2097152"
+    networks: [internal]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8001/internal/v1/health', timeout=2).status == 200 else 1)"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+    environment:
+      APP_ENV: development
+      PORT: "4000"
+      DATABASE_URL: postgresql://bb_api:${DB_API_PASSWORD:-bb_api_dev_password}@postgres:5432/becbarrier_dev
+      MIGRATION_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/becbarrier_dev
+      WORKER_DATABASE_URL: postgresql://bb_worker:${DB_WORKER_PASSWORD:-bb_worker_dev_password}@postgres:5432/becbarrier_dev
+      AUDIT_DATABASE_URL: postgresql://bb_audit_ro:${DB_AUDIT_PASSWORD:-bb_audit_ro_dev_password}@postgres:5432/becbarrier_dev
+      SESSION_SIGNING_KEY: ${SESSION_SIGNING_KEY}
+      PAYMENT_ENCRYPTION_KEY: ${PAYMENT_ENCRYPTION_KEY}
+      AUDIT_HMAC_KEY: ${AUDIT_HMAC_KEY}
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN}
+      ERP_ACK_SECRET: ${ERP_ACK_SECRET}
+      EMAIL_INTELLIGENCE_URL: http://email-intelligence:8001
+      REDIS_URL: redis://redis:6379
+    ports: ["4000:4000"]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      email-intelligence: {condition: service_healthy}
+    networks: [internal]
+
+  worker:
+    build:
+      context: ..
+      dockerfile: apps/worker/Dockerfile
+    environment:
+      WORKER_DATABASE_URL: postgresql://bb_worker:${DB_WORKER_PASSWORD:-bb_worker_dev_password}@postgres:5432/becbarrier_dev
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [internal]
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    environment:
+      API_UPSTREAM: http://api:4000
+      NEXT_PUBLIC_WS_URL: ws://localhost:4000
+    ports: ["3000:3000"]
+    depends_on: [api]
+    networks: [internal]
+
+networks:
+  internal:
+
+volumes:
+  pgdata:

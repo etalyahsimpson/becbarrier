@@ -1,0 +1,76 @@
+{
+  "id": "BC-N08",
+  "category": "negative",
+  "description": "Approval with a stale revision after material edit returns 409 (T05)",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Stale revision test."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:vulcan-phone",
+        "result": "CONFIRMED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 200,
+        "state": "CALLBACK_VERIFIED"
+      }
+    },
+    {
+      "actor": "atlas-initiator",
+      "action": "revise",
+      "input": {
+        "expectedRevision": 1,
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00009988776655",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd \u2014 Treasury",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Beneficiary corrected by supplier."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 2
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 409,
+        "code": "STALE_REVISION"
+      }
+    }
+  ],
+  "finalState": "ON_HOLD",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

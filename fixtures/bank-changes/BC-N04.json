@@ -1,0 +1,29 @@
+{
+  "id": "BC-N04",
+  "category": "negative",
+  "description": "Security analyst cannot create a bank change",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-analyst",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Analyst should not initiate."
+      },
+      "expect": {
+        "status": 403,
+        "code": "FORBIDDEN"
+      }
+    }
+  ],
+  "finalState": null,
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

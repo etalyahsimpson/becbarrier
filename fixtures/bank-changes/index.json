@@ -1,0 +1,36 @@
+{
+  "description": "Executable bank-change workflow scenarios (run by tests/integration/bank-change-scenarios.test.ts).",
+  "counts": {
+    "valid": 12,
+    "negative": 14,
+    "total": 26
+  },
+  "scenarios": [
+    "BC-V01",
+    "BC-V02",
+    "BC-V03",
+    "BC-V04",
+    "BC-V05",
+    "BC-V06",
+    "BC-V07",
+    "BC-V08",
+    "BC-V09",
+    "BC-V10",
+    "BC-V11",
+    "BC-V12",
+    "BC-N01",
+    "BC-N02",
+    "BC-N03",
+    "BC-N04",
+    "BC-N05",
+    "BC-N06",
+    "BC-N07",
+    "BC-N08",
+    "BC-N09",
+    "BC-N10",
+    "BC-N11",
+    "BC-N12",
+    "BC-N13",
+    "BC-N14"
+  ]
+}

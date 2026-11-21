@@ -1,0 +1,45 @@
+{
+  "id": "BC-N07",
+  "category": "negative",
+  "description": "Callback using a number that appears only in the email is rejected (T07)",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Number supplied in the message body."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:nonexistent-contact",
+        "result": "CONFIRMED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 404,
+        "code": "NOT_FOUND_IN_TENANT"
+      }
+    }
+  ],
+  "finalState": "ON_HOLD",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

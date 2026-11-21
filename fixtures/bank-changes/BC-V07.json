@@ -1,0 +1,48 @@
+{
+  "id": "BC-V07",
+  "category": "valid",
+  "description": "Independent callback returns DENIED \u2014 request rejected safely",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Suspicious email requested the change."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:vulcan-phone",
+        "result": "DENIED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 200,
+        "state": "REJECTED"
+      }
+    }
+  ],
+  "finalState": "REJECTED",
+  "expectAuditEventTypes": [
+    "CALLBACK_DENIED",
+    "REQUEST_REJECTED"
+  ],
+  "idempotentSteps": true
+}

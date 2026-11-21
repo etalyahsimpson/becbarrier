@@ -1,0 +1,250 @@
+{
+  "info": {
+    "name": "BECBarrier",
+    "description": "Enterprise BEC defense API: email indicators + governed supplier bank changes. Use demo-login first; the session cookie and CSRF token are handled automatically.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000"
+    },
+    {
+      "key": "changeId",
+      "value": ""
+    },
+    {
+      "key": "supplierId",
+      "value": ""
+    },
+    {
+      "key": "releaseRef",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/health"
+          }
+        },
+        {
+          "name": "Ready",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/ready"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Demo identities (dev only)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/auth/demo-identities"
+          }
+        },
+        {
+          "name": "Demo login (dev only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"<from demo-identities>\",\n  \"tenantId\": \"<from demo-identities>\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/demo-login"
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Email samples",
+      "item": [
+        {
+          "name": "Upload .eml (raw body)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "message/rfc822"
+              },
+              {
+                "key": "X-CSRF-Token",
+                "value": "<from login response>"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "email-upload-0001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "(raw .eml bytes)"
+            },
+            "url": "{{baseUrl}}/api/v1/email-samples"
+          }
+        },
+        {
+          "name": "List samples",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/email-samples?limit=25"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Suppliers & bank changes",
+      "item": [
+        {
+          "name": "List suppliers",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/suppliers"
+          }
+        },
+        {
+          "name": "Create bank change (\u2192 ON_HOLD)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRF-Token",
+                "value": "<csrf>"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "create-change-0001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"proposed\": {\n    \"accountIdentifier\": \"GB00SYNT000011223344\",\n    \"beneficiaryName\": \"Vulcan Steel Supplies Ltd\",\n    \"bankName\": \"Example Trust Bank\",\n    \"currency\": \"GBP\"\n  },\n  \"reason\": \"Supplier emailed new remittance details.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/suppliers/{{supplierId}}/bank-changes"
+          }
+        },
+        {
+          "name": "Verify callback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRF-Token",
+                "value": "<csrf>"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "verify-0001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": 1,\n  \"approvedContactId\": \"<approved directory contact>\",\n  \"result\": \"CONFIRMED\",\n  \"method\": \"APPROVED_DIRECTORY_CONTACT\",\n  \"evidenceRef\": \"call-log-0001\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/bank-changes/{{changeId}}/verify"
+          }
+        },
+        {
+          "name": "Decision (approve/reject)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRF-Token",
+                "value": "<csrf>"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "decide-0001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": 1,\n  \"decision\": \"APPROVE\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/bank-changes/{{changeId}}/decisions"
+          }
+        },
+        {
+          "name": "Release for ERP update",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRF-Token",
+                "value": "<csrf>"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "release-0001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"revision\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/bank-changes/{{changeId}}/release"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Audit & reports",
+      "item": [
+        {
+          "name": "Audit events",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/audit-events?limit=25"
+          }
+        },
+        {
+          "name": "Summary",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/reports/summary"
+          }
+        }
+      ]
+    }
+  ]
+}

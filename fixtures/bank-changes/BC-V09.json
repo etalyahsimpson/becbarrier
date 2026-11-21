@@ -1,0 +1,71 @@
+{
+  "id": "BC-V09",
+  "category": "edge",
+  "description": "Approval replay with same key does not create a second decision",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Approval replay test."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:vulcan-phone",
+        "result": "CONFIRMED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 200,
+        "state": "CALLBACK_VERIFIED"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "state": "APPROVAL_1"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "decide-replay",
+      "sameKey": true,
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "approvalCount": 1,
+        "state": "APPROVAL_1"
+      }
+    }
+  ],
+  "finalState": "APPROVAL_1",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

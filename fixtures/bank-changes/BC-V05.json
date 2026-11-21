@@ -1,0 +1,39 @@
+{
+  "id": "BC-V05",
+  "category": "valid",
+  "description": "Initiator cancels their own pending request",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Duplicate request; cancelling."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-initiator",
+      "action": "cancel",
+      "input": {},
+      "expect": {
+        "status": 200,
+        "state": "CANCELLED"
+      }
+    }
+  ],
+  "finalState": "CANCELLED",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

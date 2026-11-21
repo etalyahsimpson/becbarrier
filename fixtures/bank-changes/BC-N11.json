@@ -1,0 +1,95 @@
+{
+  "id": "BC-N11",
+  "category": "negative",
+  "description": "ERP acknowledgment with the wrong adapter secret is refused",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "ERP auth test."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:vulcan-phone",
+        "result": "CONFIRMED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 200,
+        "state": "CALLBACK_VERIFIED"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "state": "APPROVAL_1"
+      }
+    },
+    {
+      "actor": "atlas-approver2",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "state": "APPROVAL_2"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "release",
+      "input": {
+        "revision": 1
+      },
+      "expect": {
+        "status": 200,
+        "state": "RELEASED_FOR_ERP_UPDATE"
+      }
+    },
+    {
+      "actor": "atlas-admin",
+      "action": "erp-ack",
+      "input": {
+        "releaseRef": "@releaseRef",
+        "revision": 1,
+        "externalReceipt": "ERP-RCPT-2026-0001"
+      },
+      "useReleaseRef": true,
+      "wrongSecret": true,
+      "expect": {
+        "status": 401,
+        "code": "UNAUTHENTICATED"
+      }
+    }
+  ],
+  "finalState": "RELEASED_FOR_ERP_UPDATE",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

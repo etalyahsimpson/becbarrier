@@ -1,0 +1,9 @@
+From: Vulcan Steel Accounts <billing@vu1can-stee1.example>
+To: Finance <finance@atlas-mfg.example>
+Subject: URGENT final notice — banking change
+Reply-To: vulcan.payments@external-mail.example
+Date: Fri, 20 Nov 2026 09:00:00 +0000
+Message-ID: <billing-20261120@atlas-mfg.example>
+Authentication-Results: mx.example; spf=pass; dkim=pass; dmarc=pass
+
+Immediate action required: our bank account number and beneficiary have changed. Update your records today before the payment deadline or shipments will stop.

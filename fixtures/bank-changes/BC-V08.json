@@ -1,0 +1,49 @@
+{
+  "id": "BC-V08",
+  "category": "edge",
+  "description": "Identical create replay with same idempotency key returns the same change",
+  "tenant": "atlas",
+  "supplier": "vulcan-steel",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Replayed submission."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-initiator",
+      "action": "create-replay",
+      "sameKey": true,
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00001122334455",
+          "beneficiaryName": "Vulcan Steel Supplies Ltd",
+          "bankName": "Example Trust Bank",
+          "currency": "GBP"
+        },
+        "reason": "Replayed submission."
+      },
+      "expect": {
+        "status": 201,
+        "sameChange": true,
+        "state": "ON_HOLD"
+      }
+    }
+  ],
+  "finalState": "ON_HOLD",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

@@ -1,0 +1,102 @@
+{
+  "id": "BC-V12",
+  "category": "edge",
+  "description": "Early release attempt denied, then workflow completes correctly",
+  "tenant": "atlas",
+  "supplier": "meridian-pack",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00002211446688",
+          "beneficiaryName": "Meridian Packaging Co",
+          "bankName": "Example Commerce Bank",
+          "currency": "GBP"
+        },
+        "reason": "Early release attempt test."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    },
+    {
+      "actor": "atlas-verifier",
+      "action": "verify",
+      "input": {
+        "revision": 1,
+        "approvedContactId": "@contact:meridian-phone",
+        "result": "CONFIRMED",
+        "method": "APPROVED_DIRECTORY_CONTACT",
+        "evidenceRef": "call-log-2026-11-21"
+      },
+      "expect": {
+        "status": 200,
+        "state": "CALLBACK_VERIFIED"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "release",
+      "input": {
+        "revision": 1
+      },
+      "expect": {
+        "status": 422,
+        "code": "INVALID_TRANSITION"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "state": "APPROVAL_1"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "release",
+      "input": {
+        "revision": 1
+      },
+      "expect": {
+        "status": 422,
+        "code": "INVALID_TRANSITION"
+      }
+    },
+    {
+      "actor": "atlas-approver2",
+      "action": "decide",
+      "input": {
+        "revision": 1,
+        "decision": "APPROVE"
+      },
+      "expect": {
+        "status": 200,
+        "state": "APPROVAL_2"
+      }
+    },
+    {
+      "actor": "atlas-approver1",
+      "action": "release",
+      "input": {
+        "revision": 1
+      },
+      "expect": {
+        "status": 200,
+        "state": "RELEASED_FOR_ERP_UPDATE"
+      }
+    }
+  ],
+  "finalState": "RELEASED_FOR_ERP_UPDATE",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}

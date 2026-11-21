@@ -1,0 +1,30 @@
+{
+  "id": "BC-V06",
+  "category": "edge",
+  "description": "Supplier without an active payment account still enters HOLD",
+  "tenant": "atlas",
+  "supplier": "granite-tools",
+  "steps": [
+    {
+      "actor": "atlas-initiator",
+      "action": "create",
+      "input": {
+        "proposed": {
+          "accountIdentifier": "GB00SYNT00007788990011",
+          "beneficiaryName": "Granite Tooling Co",
+          "bankName": "Example Regional Bank",
+          "currency": "GBP"
+        },
+        "reason": "Onboarding new supplier payment details."
+      },
+      "expect": {
+        "status": 201,
+        "state": "ON_HOLD",
+        "revision": 1
+      }
+    }
+  ],
+  "finalState": "ON_HOLD",
+  "expectAuditEventTypes": [],
+  "idempotentSteps": true
+}
