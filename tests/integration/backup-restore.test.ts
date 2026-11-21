@@ -18,7 +18,7 @@ const DUMP_FILE = '/tmp/becbarrier-t14-backup.dump';
 
 function parseUrl(url: string): { host: string; port: string; user: string; password: string } {
   const queryMatch = /[?&]host=([^&]+)/.exec(url);
-  const match = /postgresql:\/\/([^@\/]*)@([^:\/?]*)(?::(\d+))?/.exec(url);
+  const match = /postgresql:\/\/([^@/]*)@([^:/?]*)(?::(\d+))?/.exec(url);
   const [user, password] = (match?.[1] ?? '').split(':');
   const host = queryMatch?.[1] ?? (match?.[2] || 'localhost');
   return { host, port: match?.[3] || '5432', user: user || 'postgres', password: password || '' };
