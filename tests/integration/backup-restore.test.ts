@@ -16,11 +16,12 @@ import { verifyChain, type AuditEventRecord } from '@becbarrier/security';
 const RESTORE_DB = 'becbarrier_restore_test';
 const DUMP_FILE = '/tmp/becbarrier-t14-backup.dump';
 
-function parseUrl(url: string): { host: string; port: string; user: string } {
+function parseUrl(url: string): { host: string; port: string; user: string; password: string } {
   const queryMatch = /[?&]host=([^&]+)/.exec(url);
-  const match = /postgresql:\/\/([^@/]*)@([^:/?]*)(?::(\d+))?/.exec(url);
+  const match = /postgresql:\/\/([^@\/]*)@([^:\/?]*)(?::(\d+))?/.exec(url);
+  const [user, password] = (match?.[1] ?? '').split(':');
   const host = queryMatch?.[1] ?? (match?.[2] || 'localhost');
-  return { host, port: match?.[3] || '5432', user: match?.[1]?.split(':')[0] || 'postgres' };
+  return { host, port: match?.[3] || '5432', user: user || 'postgres', password: password || '' };
 }
 
 async function readChain(client: pg.Client, tenantId: string): Promise<AuditEventRecord[]> {
@@ -47,7 +48,7 @@ async function readChain(client: pg.Client, tenantId: string): Promise<AuditEven
 describe('T14: backup and restore preserves immutable history and replay safety', () => {
   it('dumps, restores and verifies histories on a fresh database', async () => {
     const sourceUrl = process.env.MIGRATION_DATABASE_URL!;
-    const { host, port, user } = parseUrl(sourceUrl);
+    const { host, port, user, password } = parseUrl(sourceUrl);
     const admin = await harness();
 
     // Create a deterministic released change first so the backup contains a
@@ -110,14 +111,14 @@ describe('T14: backup and restore preserves immutable history and replay safety'
     const pgRestore = process.env.PG_RESTORE_BIN ?? 'pg_restore';
     const connArgs = ['-h', host, '-p', port, '-U', user];
     execFileSync(pgDump, [...connArgs, '-Fc', '-f', DUMP_FILE, 'becbarrier_test'], {
-      env: { ...process.env, PGPASSWORD: process.env.PG_PASSWORD ?? '' },
+      env: { ...process.env, PGPASSWORD: password || process.env.PGPASSWORD || '' },
     });
 
     // Fresh restore database.
     await admin.query(`DROP DATABASE IF EXISTS ${RESTORE_DB}`);
     await admin.query(`CREATE DATABASE ${RESTORE_DB}`);
     execFileSync(pgRestore, [...connArgs, '-d', RESTORE_DB, '--no-owner', DUMP_FILE], {
-      env: { ...process.env, PGPASSWORD: process.env.PG_PASSWORD ?? '' },
+      env: { ...process.env, PGPASSWORD: password || process.env.PGPASSWORD || '' },
     });
 
     // Restore target connection (same socket host).
