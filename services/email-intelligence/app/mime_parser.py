@@ -16,6 +16,7 @@ from dataclasses import dataclass, field
 from email import policy
 from email.message import EmailMessage
 from email.parser import BytesParser
+from typing import Any
 
 from .normalization import split_address
 from .schemas import AuthStatus, NormalizedEmail, ParseStatus
@@ -176,7 +177,7 @@ def _extract(message: EmailMessage, digest: str, provenance: str) -> ParseResult
         except Exception:  # noqa: BLE001
             return
 
-    walk(message, 0)  # type: ignore[arg-type]
+    walk(message, 0)
 
     body_excerpt: str | None = None
     if body_text:
@@ -192,7 +193,7 @@ def _extract(message: EmailMessage, digest: str, provenance: str) -> ParseResult
         claimTrust="UNTRUSTED_CLAIM" if auth_results_raw else "NONE",
     )
 
-    to_list: list[dict[str, object]] = []
+    to_list: list[dict[str, Any]] = []
     if to_raw:
         for chunk in to_raw.split(",")[:20]:
             parsed = split_address(chunk.strip())
@@ -205,7 +206,7 @@ def _extract(message: EmailMessage, digest: str, provenance: str) -> ParseResult
         fromAddress=split_address(from_raw),
         replyTo=split_address(reply_to_raw),
         sender=split_address(sender_raw),
-        to=to_list,  # type: ignore[arg-type]
+        to=to_list,
         subject=subject[:300] if subject else None,
         messageId=message_id[:300] if message_id else None,
         date=date_raw[:120] if date_raw else None,

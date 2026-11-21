@@ -2,7 +2,7 @@ import { parse as parseCookie } from 'cookie';
 import type { NextFunction, Request, Response } from 'express';
 import type { Db } from '../db.js';
 import type { AppConfig } from '../config.js';
-import { csrfTokenFor, verifySession, type SessionPayload } from '@becbarrier/security';
+import { csrfTokenFor, verifySession } from '@becbarrier/security';
 import { ActorState, err } from './error.js';
 
 export const SESSION_COOKIE = 'bb_session';

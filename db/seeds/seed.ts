@@ -15,7 +15,7 @@ import pg from 'pg';
 import { randomUUID } from 'node:crypto';
 import { createContextKey, appendAuditEvent, sha256Hex } from '@becbarrier/security';
 import { canonicalAccountIdentifier, maskAccountSuffix } from '@becbarrier/domain';
-import { SEED, SEED_ACCOUNTS, seedId, tenantId, userId, supplierId, contactId, changeId, emailSampleId } from './seed-data.js';
+import { SEED, SEED_ACCOUNTS, seedId, tenantId, userId, contactId, changeId, emailSampleId } from './seed-data.js';
 
 interface FixtureManifest {
   fixtures: Array<{
@@ -319,8 +319,6 @@ async function seedChanges(client: pg.Client, auditKey: string, crypto: ReturnTy
       bankName: 'Example Trust Bank',
       currency: account?.currency ?? 'GBP',
     };
-    const canonical = canonicalAccountIdentifier(proposed.accountIdentifier);
-    const fingerprint = crypto.fingerprint(canonical);
     const maskedSuffix = maskAccountSuffix(proposed.accountIdentifier);
     const oldAccountId = account ? seedId(`account:${spec.supplier}`) : null;
 

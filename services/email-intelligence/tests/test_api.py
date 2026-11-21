@@ -15,7 +15,7 @@ from conftest import NORMAL_EML, b64
 from app.main import app  # noqa: E402
 
 client = TestClient(app)
-TOKEN = {"X-Internal-Service-Token": "test-internal-token"}
+TOKEN = {"X-Internal-Service-Token": os.environ.get("INTERNAL_SERVICE_TOKEN", "test-internal-token")}
 
 
 class TestInternalAuth:

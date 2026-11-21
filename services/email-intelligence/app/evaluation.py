@@ -18,6 +18,8 @@ from .schemas import (
     ParseStatus,
     ProvenanceGrade,
     RuleFinding,
+    RuleOutcome,
+    Severity,
 )
 
 SEVERITY_WEIGHTS = {"INFO": 0, "LOW": 10, "MEDIUM": 25, "HIGH": 45, "CRITICAL": 70}
@@ -73,8 +75,8 @@ def evaluate(
             RuleFinding(
                 ruleId="PARSE",
                 version=RULE_VERSION,
-                outcome="UNKNOWN",
-                severity="INFO",
+                outcome=RuleOutcome.UNKNOWN,
+                severity=Severity.INFO,
                 provenance=provenance,
                 explanation=f"The sample could not be fully parsed ({result.status.value}"
                 f"{': ' + result.error if result.error else ''}); findings are UNKNOWN, not PASS.",

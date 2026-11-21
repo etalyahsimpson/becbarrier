@@ -152,39 +152,38 @@ describe('T11: audit failure rolls back the financial mutation; worker never rel
     );
     expect(Number(pendingBefore.rows[0]!.count)).toBeGreaterThanOrEqual(1);
 
-    // Run one worker batch directly (simulating worker recovery).
+    // Run the worker until the queue is fully drained (bounded). A single
+    // batch claims at most 20 rows, so a growing backlog from other tests
+    // must not make this check dependent on global queue depth.
     const pool = new pg.Pool({ connectionString: process.env.WORKER_DATABASE_URL ?? process.env.DATABASE_URL, max: 2 });
     const workerClient = await pool.connect();
     try {
-      await workerClient.query('BEGIN');
-      const delivered = await processBatch(workerClient);
-      await workerClient.query('COMMIT');
-      expect(delivered).toBeGreaterThanOrEqual(1);
-    } finally {
-      workerClient.release();
-      await pool.end();
-    }
+      let totalDelivered = 0;
+      for (let round = 0; round < 200; round += 1) {
+        await workerClient.query('BEGIN');
+        const delivered = await processBatch(workerClient);
+        await workerClient.query('COMMIT');
+        totalDelivered += delivered;
+        if (delivered === 0) break;
+      }
+      expect(totalDelivered).toBeGreaterThanOrEqual(1);
 
-    // The financial state is UNCHANGED by worker activity.
-    const state = await client.query<{ state: string }>(`SELECT state FROM bank_change_requests WHERE id = $1`, [changeId]);
-    expect(state.rows[0]!.state).toBe('ON_HOLD');
+      // The financial state is UNCHANGED by worker activity.
+      const state = await client.query<{ state: string }>(`SELECT state FROM bank_change_requests WHERE id = $1`, [changeId]);
+      expect(state.rows[0]!.state).toBe('ON_HOLD');
 
-    // Running the worker again delivers nothing new (deterministic dedupe).
-    const pool2 = new pg.Pool({ connectionString: process.env.WORKER_DATABASE_URL ?? process.env.DATABASE_URL, max: 2 });
-    const workerClient2 = await pool2.connect();
-    try {
-      await workerClient2.query('BEGIN');
-      const second = await processBatch(workerClient2);
-      await workerClient2.query('COMMIT');
+      // After a full drain the change's events are all delivered, and a
+      // further worker pass delivers nothing new (deterministic dedupe).
+      const extra = await processBatch(workerClient);
       const stillPending = await client.query<{ count: string }>(
         `SELECT count(*) AS count FROM outbox_events WHERE redacted_payload->>'changeId' = $1 AND status = 'PENDING'`,
         [changeId],
       );
       expect(Number(stillPending.rows[0]!.count)).toBe(0);
-      void second;
+      expect(extra).toBe(0);
     } finally {
-      workerClient2.release();
-      await pool2.end();
+      workerClient.release();
+      await pool.end();
     }
 
     // A duplicate worker pass cannot create an extra release event.

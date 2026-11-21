@@ -46,6 +46,18 @@ No email analysis result — not even a "perfect" SPF/DKIM/DMARC pass — can by
 2. **Legitimate-looking but still governed** — an authenticated-looking supplier email (S04) still forces `ON_HOLD`; verified callback + two distinct approvals produce `RELEASED_FOR_ERP_UPDATE` — an export instruction only.
 3. **Privilege & concurrency failures** — self-approval, duplicate approver, stale revision, racing releases and cross-tenant access all fail closed without corrupting state (`tests/integration`).
 
+## The workbench in action
+
+Genuine captures from the running seeded application (Playwright, `scripts/capture-screenshots.sh`):
+
+| Security Overview | Email Risk Review |
+|:---:|:---:|
+| ![Security Overview dashboard](assets/screenshots/overview.png) | ![Email risk review with upload and findings](assets/screenshots/email-risk-review.png) |
+
+| Email findings & provenance | Bank-change dual approval |
+|:---:|:---:|
+| ![Email findings with rule outcomes and untrusted auth claims](assets/screenshots/email-findings.png) | ![Bank change detail with callback and approvals](assets/screenshots/bank-change-approval.png) |
+
 ## Architecture
 
 ```mermaid
